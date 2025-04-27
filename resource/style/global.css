@@ -1,0 +1,342 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #1b1818;
+    color: #f5f5f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    text-align: center;
+    padding: 30px;
+    color: white;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+}
+
+#mainmid {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    background-color: #252222;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.submit {
+    text-align: center;
+    margin-top: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #333;
+    color: #fff;
+    resize: vertical;
+    min-height: 150px;
+    font-family: 'Consolas', 'Monaco', monospace;
+    line-height: 1.5;
+}
+
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #333;
+    color: white;
+    border-radius: 5px;
+    border: 1px solid #444;
+}
+
+input[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    margin-top: 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="submit"]:hover {
+    background-color: #45a049;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+
+select {
+    padding: 8px 12px;
+    margin-bottom: 30px;
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: Arial, sans-serif;
+}
+
+.selector-form {
+    margin-bottom: 20px;
+}
+
+.notification {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.notification.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.notification.error {
+    background-color: #ff6b6b;
+    color: white;
+}
+
+.notification.warning {
+    background-color: #ff9800;
+    color: white;
+}
+
+.notification.info {
+    background-color: #2196F3;
+    color: white;
+}
+
+.subtitle {
+    display: block;
+    text-align: center;
+    color: #ddd;
+    font-style: italic;
+}
+
+footer {
+    display: flex;
+    background-color: rgb(18, 18, 18);
+    padding: 40px 60px;
+    margin-top: auto;
+}
+
+.about {
+    width: 50%;
+    color: #ddd;
+    text-align: justify;
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+.donate {
+    width: 50%;
+}
+
+.error {
+    background-color: #ff6b6b;
+    color: white;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    text-align: center;
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+
+}
+.email{
+    color: blue;
+
+}
+.features {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 15px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 15px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.feature-icon {
+    font-size: 1.2rem;
+    margin-right: 10px;
+}
+
+.feature-text {
+    font-size: 0.9rem;
+    color: #ddd;
+}
+
+.crypto-donations {
+    margin-top: 15px;
+}
+
+.crypto {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.crypto-name {
+    font-weight: bold;
+    color: #ddd;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.crypto-address {
+    color: #aaa;
+    font-size: 0.8rem;
+    word-break: break-all;
+    display: block;
+    font-family: monospace;
+}
+
+.donate {
+    color: #ddd;
+    padding-left: 30px;
+}
+
+.donate h3 {
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.donate-message {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+#expire{
+    background-color: #333;
+    color: white;
+    border: 1px solid #444;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+.subtitle{
+    padding: 1%;
+}
+.file-preview {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px auto;
+    max-width: 800px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid #444;
+}
+.file-info {
+    margin-bottom: 20px;
+    padding: 15px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid #555;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+.file-info p {
+    margin: 5px 0;
+    color: #ddd;
+    font-family: 'Courier New', monospace;
+    line-height: 1.5;
+}
+.preview-container {
+    margin: 20px 0;
+    text-align: center;
+    max-height: 500px;
+    overflow: auto;
+    background-color: #2a2a2a;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    box-shadow: inset 0 1px 5px rgba(0, 0, 0, 0.2);
+}
+.preview-container img, .preview-container video, .preview-container audio {
+    max-width: 100%;
+    max-height: 400px;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+.text-preview {
+    text-align: left;
+    white-space: pre-wrap;
+    font-family: 'Consolas', 'Monaco', monospace;
+    color: #ddd;
+    padding: 15px;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    overflow: auto;
+    max-height: 400px;
+    border: 1px solid #444;
+    line-height: 1.5;
+}
+.download-btn {
+    display: inline-block;
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-top: 20px;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+.download-btn:hover {
+    background-color: #45a049;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+}
+.no-preview {
+    color: #ddd;
+    padding: 30px;
+    text-align: center;
+    font-style: italic;
+    background-color: #2a2a2a;
+    border-radius: 5px;
+    border: 1px dashed #555;
+}
+.download-container {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
