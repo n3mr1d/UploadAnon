@@ -7,6 +7,7 @@ I'm **Nameraid/N3mr1d**, the creator of **Uploadadanon** — a platform for uplo
 ## ✨ Features
 
 - **Fully Anonymous**: No logs, no user tracking.
+- **No JavaScript Required**: The platform works completely without JavaScript for better privacy and faster loading.
 - **Auto Expiration**: Files are automatically deleted based on the set expiration time. Files with "never" expiration will be removed after the New Year.
 - **Metadata Removal**: All uploaded files and images are automatically stripped of metadata.
 - **Link-Based Access**: Only users with the unique access link can view the uploaded files or images.
@@ -16,6 +17,7 @@ I'm **Nameraid/N3mr1d**, the creator of **Uploadadanon** — a platform for uplo
 
 - Files and images can only be accessed by those with the specific access link.
 - Without the link, files cannot be discovered or accessed.
+- No user tracking, no cookies, no JavaScript — pure privacy.
 - All uploads are secured and leave no user trace.
 
 ## 📈 Statistics
