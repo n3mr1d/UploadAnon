@@ -377,7 +377,7 @@ function showpage($showwhat = 'text') {
     
     echo '<h1 class="title">EnfileUp</h1>';
     echo '<div class="container">';
-    echo '<span class="subtitle">Anonymous Image and File Uploader</span>';
+    echo '<span class="subtitle">Anonymous Image and File Uploader and <span style="color:red">No Need JS</span></span>';
     echo '<p>If you found a bug, please report to <span class="email">idrift@dnmx.su</span></p>';
     echo '</div>';
 
@@ -403,12 +403,14 @@ function showpage($showwhat = 'text') {
         echo '<div class="notification success"> Your File Uploaded Successfully! ' . $resault . '</div>';
     }
     
+    // Replace JavaScript-based selector with a form that submits on change
     echo '<form method="post" action="" class="selector-form">
         <label for="showwhat">Select option:</label>
-        <select name="showwhat" id="showwhat" onchange="this.form.submit()">
+        <select name="showwhat" id="showwhat">
             <option value="text" ' . ($showwhat === 'text' ? 'selected' : '') . '>Text Upload</option>
             <option value="file" ' . ($showwhat === 'file' ? 'selected' : '') . '>File Upload</option>
         </select>
+        <input type="submit" value="Switch">
     </form>';
 
     if ($showwhat === 'text') {
