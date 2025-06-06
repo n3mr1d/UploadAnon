@@ -103,6 +103,7 @@ function setupDatabase() {
         max_downloads INT DEFAULT 0,
         description TEXT DEFAULT NULL,
         user_agent TEXT DEFAULT NULL,
+        id_bulk VARCHAR(255) DEFAULT NULL,
         INDEX(unique_id),
         INDEX(expire),
         INDEX(upload_timestamp)

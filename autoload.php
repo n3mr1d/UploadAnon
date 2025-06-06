@@ -20,4 +20,7 @@ $autoload = function(string $fun) {
 $autoload('setting');
 $autoload("navbar");
 $autoload("form");
+$autoload("preview");
+$autoload("api");
 $autoload("route");
+$autoload("validate");

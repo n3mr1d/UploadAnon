@@ -59,7 +59,10 @@ function showPasswordPrompt($fileId, $error = null) {
             <form method="post">
                 <label for="file_password">Enter Password:</label>
                 <input type="password" name="file_password" required>
-                <input type="submit" name="password_submit" value="Access File">
+                <button type="submit" name="password_submit" value="Access File">
+                    <i class="fas fa-lock"></i>
+                    Access File
+                </button>
             </form>
             <p><a href="/">Back to Home</a></p>
         </div>';
@@ -191,38 +194,66 @@ function textup() {
 // bulkup form page
 function bulkup() {
     echo '
-        <div id="bulk-upload" class="upload-section" >
-                    <form action="/" method="post" enctype="multipart/form-data" class="konntainer-upload">
-                        <h2><i class="fas fa-layer-group"></i> Bulk Upload</h2>
-                        <div class="form-options">
-                            <div class="form-group">
-                                <label for="bulkFiles">Choose Multiple Files:</label>
-                                <input type="file" name="bulkFiles[]" id="bulkFiles" multiple required>
-                                <div class="file-info">
-                                    <p><i class="fas fa-info-circle"></i> <strong>Info:</strong> Select multiple files to upload at once. All files will use the same privacy setting and expiration.</p>
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label>Privacy Setting:</label>
-                                <div class="kontainer-radio">
-                                    <input type="radio" id="private-bulk" name="is_private" value="1" checked>
-                                    <label for="private-bulk" class="radio-option">
-                                        <i class="fas fa-lock"></i> Private
-                                    </label>
-
-                                    <input type="radio" id="public-bulk" name="is_private" value="0">
-                                    <label for="public-bulk" class="radio-option">
-                                        <i class="fas fa-globe"></i> Public
-                                    </label>
-                                </div>
-                            </div>
+          <div id="bulk-upload" class="upload-section">
+            <form action="/" method="post" enctype="multipart/form-data" class="konntainer-upload">
+                <h2><i class="fas fa-layer-group"></i> Bulk Upload</h2>
+                <div class="form-options">
+                    <div class="form-group">
+                        <label for="bulkFiles">Choose Multiple Files:</label>
+                        <input type="file" name="bulkFiles[]" id="bulkFiles" multiple required>
+                        <div class="file-info">
+                            <p><i class="fas fa-info-circle"></i> <strong>Info:</strong> Select multiple files to upload at once. All files will use the same privacy setting and expiration.</p>
                         </div>
-                        <button type="submit">
-                            <i class="fas fa-upload"></i>
-                            Upload Files
-                        </button>
-                    </form>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Privacy Setting:</label>
+                        <div class="kontainer-radio">
+                            <input type="radio" id="private-bulk" name="is_private" value="1" checked>
+                            <label for="private-bulk" class="radio-option">
+                                <i class="fas fa-lock"></i> Private
+                            </label>
+
+                            <input type="radio" id="public-bulk" name="is_private" value="0">
+                            <label for="public-bulk" class="radio-option">
+                                <i class="fas fa-globe"></i> Public
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional bulk options -->
+                    <div class="form-group">
+                        <label for="expire-bulk">Expire after (days):</label>
+                        <select name="expire" id="expire-bulk">
+                            <option value="0">Never</option>
+                            <option value="1">1 day</option>
+                            <option value="7">7 days</option>
+                            <option value="30">30 days</option>
+                            <option value="90">90 days</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password-bulk">Password protect (optional):</label>
+                        <input type="password" name="password" id="password-bulk" placeholder="Leave empty for no password">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="max-downloads-bulk">Max downloads (0 = unlimited):</label>
+                        <input type="number" name="max_downloads" id="max-downloads-bulk" min="0" value="0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="description-bulk">Bulk description (optional):</label>
+                        <textarea name="description" id="description-bulk" rows="3" placeholder="Description for all files in this bulk upload"></textarea>
+                    </div>
                 </div>
+                
+                <button type="submit" name="bulk_submit" class="upload-btn">
+                    <i class="fas fa-upload"></i>
+                    Upload Files
+                </button>
+            </form>
+        </div>
 ';
 }
