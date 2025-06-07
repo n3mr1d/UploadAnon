@@ -210,30 +210,49 @@ showpage();
 }
 // admin validate login page
 function validatelogin() {
-    global $db ,$errors;
-       
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-            
-            $stmt = $db->prepare("SELECT id, password_hash FROM admin_users WHERE username = :username");
-            $stmt->bindParam(':username', $username);
-            $stmt->execute();
-            $admin = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($admin && password_verify( $password, $admin['password']) ) {
-                $_SESSION['admin_logged_in'] = true;
-                $_SESSION['admin_id'] = $admin['id'];
-                
-                // Update last login
-                $updateStmt = $db->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = :id");
-                $updateStmt->bindParam(':id', $admin['id']);
-                $updateStmt->execute();
-                header("Location: /?action=dashboard");
-            } else {
-                      $errors[] = "invalid credentials";
+    global $db;
 
-            }
+    try {
+        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+        $password = $_POST['password'] ?? '';
+
+        // Simpan username agar tetap muncul di form setelah gagal login
+        $_SESSION['login_username'] = $username;
+
+        if (empty($username) || empty($password)) {
+            $_SESSION['login_errors'][] = "Username and password are required.";
+            return false;
         }
+
+        $stmt = $db->prepare("SELECT id, password_hash FROM admin_users WHERE username = :username LIMIT 1");
+        $stmt->bindParam(':username', $username);
+        $stmt->execute();
+        $admin = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($admin && password_verify($password, $admin['password_hash'])) {
+            $_SESSION['admin_logged_in'] = true;
+            $_SESSION['admin_id'] = $admin['id'];
+
+            // Update last login
+            $updateStmt = $db->prepare("UPDATE admin_users SET last_login = NOW() WHERE id = :id");
+            $updateStmt->bindParam(':id', $admin['id']);
+            $updateStmt->execute();
+
+            header("Location: /?action=dashboard");
+            exit;
+        } else {
+            $_SESSION['login_errors'][] = "Invalid credentials.";
+            header("Location: /?action=loginmin");
+
+        }
+
+    } catch (PDOException $e) {
+        $_SESSION['login_errors'][] = "Database error. Please try again later.";
+        // Optional: error_log($e->getMessage());
+        return false;
+    }
+}
+
 // Enhanced file validation
 function validateFile($file) {
     global $errors;

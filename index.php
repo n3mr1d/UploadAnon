@@ -12,6 +12,17 @@ $result = '';
 $errors = [];
 $success = [];
 
+function secureHeaders() {
+    // Set security headers
+    header("Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self';");
+    header("X-Content-Type-Options: nosniff");
+    header("X-Frame-Options: DENY");
+    header("X-XSS-Protection: 1; mode=block");
+    header("Referrer-Policy: strict-origin-when-cross-origin");
+    header("Strict-Transport-Security: max-age=63072000; includeSubDomains; preload");
+    header("Permissions-Policy: geolocation=(), microphone=(), camera=()");
+}
+
 
 
 function print_start(string $title) {
@@ -28,8 +39,10 @@ function print_start(string $title) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EnfileUp - ' . htmlspecialchars($title, ENT_QUOTES, 'UTF-8') . '</title>
+    '.secureHeaders().'
     <link rel="stylesheet" href="/resource/style/global.css">
     <link rel="stylesheet" href="/font/fontawesome-free-6.7.2-web/css/all.min.css">
+    <link rel="icon" href="icon.svg" type="iamge/svg+xml">
 </head>
 <body>' . navbar() . '<main class="' . $className . '">';
 
@@ -557,7 +570,23 @@ function showGallery() {
 
 
 
-
+function checkpassword($fileId){
+    global $db;
+        $password = $_POST['file_password'];
+        $stmt = $db->prepare("SELECT password_hash FROM fileup WHERE unique_id = :unique_id");
+        $stmt->bindParam(':unique_id', $fileId);
+        $stmt->execute();
+        $file = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($file && password_verify($password, $file['password_hash'])) {
+            $_SESSION['authenticated_files'][$fileId] = true;
+            
+        } else {
+            showPasswordPrompt($fileId, "Incorrect password");
+            return;
+        }
+    
+}
 function showAdminDashboard($stats) {
     print_start("dashboard admin");
     echo '<div class="admin-dashboard">

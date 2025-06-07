@@ -3,62 +3,64 @@
 
 function displayFile($fileId) {
     global $db;
-    
-    // Check for password protection
-    if (isset($_POST['password_submit'])) {
-        $password = $_POST['file_password'];
-        $stmt = $db->prepare("SELECT password_hash FROM fileup WHERE unique_id = :unique_id");
-        $stmt->bindParam(':unique_id', $fileId);
-        $stmt->execute();
-        $file = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-        if ($file && password_verify($password, $file['password_hash'])) {
-            $_SESSION['authenticated_files'][$fileId] = true;
-        } else {
-            showPasswordPrompt($fileId, "Incorrect password");
-            return;
-        }
-    }
-    
-    // Get file from database
+
+    // Always fetch file info first
     $stmt = $db->prepare("SELECT * FROM fileup WHERE unique_id = :unique_id");
     $stmt->bindParam(':unique_id', $fileId);
     $stmt->execute();
-    
     $file = $stmt->fetch(PDO::FETCH_ASSOC);
-    
+
     if (!$file) {
         die("<div class='error'>File not found</div>");
     }
+
+    // Handle password submission
     
-    // Check password protection
-    if ($file['password_hash'] && !isset($_SESSION['authenticated_files'][$fileId])) {
+
+    // Check password protection (after possible unlock above)
+    if (!empty($file['password_hash']) && !isset($_SESSION['authenticated_files'][$fileId])) {
         showPasswordPrompt($fileId);
         return;
     }
-    
+
     // Check file existence
     if (!file_exists($file['fileloc'])) {
         die("<div class='error'>File not found on server</div>");
     }
-    
+
     // Check expiration
     if ($file['expire'] !== null && strtotime($file['expire']) < time()) {
         cleanupExpiredFile($file);
         die("<div class='error'>This file has expired</div>");
     }
-    
+
     // Update view count and log access
     $updateStmt = $db->prepare("UPDATE fileup SET view_count = view_count + 1 WHERE id = :id");
     $updateStmt->bindParam(':id', $file['id']);
     $updateStmt->execute();
-    
+
     logFileAccess($file['id'], 'view');
-    
+
     showFilePreview($file);
 }
+function passwordcheck($fileId){
+    global $db;
+    $stmt = $db->prepare("SELECT * FROM fileup WHERE unique_id = :unique_id");
+    $stmt->bindParam(':unique_id', $fileId);
+    $stmt->execute();
+    $file = $stmt->fetch(PDO::FETCH_ASSOC);
 
-
+        $password = isset($_POST['file_password']) ? $_POST['file_password'] : '';
+        // Use the hash from the file we just fetched
+        if (!empty($file['password_hash']) && password_verify($password, $file['password_hash'])) {
+            $_SESSION['authenticated_files'][$fileId] = true;
+            displayFile($fileId);
+        } else {
+            showPasswordPrompt($fileId, "Incorrect password");
+        }
+        return true;
+ 
+}
 function showFilePreview($file) {
 print_start("Preview file");
     echo '

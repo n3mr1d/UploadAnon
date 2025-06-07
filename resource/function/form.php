@@ -1,27 +1,77 @@
 <?php
 // admin login page
+
 function showAdminLogin() {
-    print_start("Login Admin");
+    // Check if already logged in
+    if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+        header("Location: /?action=dashboard");
+        exit;
+    }
+    
+    print_start("Admin Login");
+    
+    // Display errors if any
+    $errorHtml = '';
+    if (isset($_SESSION['login_errors']) && !empty($_SESSION['login_errors'])) {
+        $errorHtml = '<div class="error-messages">';
+        foreach ($_SESSION['login_errors'] as $error) {
+            $errorHtml .= '<p class="error">' . htmlspecialchars($error, ENT_QUOTES, 'UTF-8') . '</p>';
+        }
+        $errorHtml .= '</div>';
+        // Clear errors after displaying
+        unset($_SESSION['login_errors']);
+    }
+    
+    // Generate CSRF token
+    if (!isset($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    $csrfToken = $_SESSION['csrf_token'];
+    
+    // Preserve username if login failed
+    $username = isset($_SESSION['login_username']) ? htmlspecialchars($_SESSION['login_username'], ENT_QUOTES, 'UTF-8') : '';
+    unset($_SESSION['login_username']); // Clear after use
+    
     echo '
     <div class="kontainer-login">
         <h1>Admin Login</h1>
-        <form method="post">
-        <input type="hidden" name="admin_login">  
-        <div>
+        ' . $errorHtml . '
+        <form method="post" action="/" autocomplete="on">
+            <input type="hidden" name="admin_login" value="1">
+            <input type="hidden" name="csrf_token" value="' . $csrfToken . '">
+            
+            <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" name="username" required>
+                <input type="text" 
+                       id="username" 
+                       name="username" 
+                       value="' . $username . '"
+                       required 
+                       maxlength="50"
+                       autocomplete="username"
+                       autocapitalize="none"
+                       spellcheck="false">
             </div>
-            <div>
+            
+            <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" name="password" required>
+                <input type="password" 
+                       id="password" 
+                       name="password" 
+                       required 
+                       minlength="6"
+                       autocomplete="current-password">
             </div>
-            <button type="submit">Login</button>
+            
+            <div class="form-group">
+                <button type="submit" class="btn-login">Login</button>
+            </div>
         </form>
-        </div>';
-        endtags();
-    exit();
+        
+    </div>';
+    endtags();
+    exit;
 }
-
 
 // admin register
 function regisadminform(){
@@ -57,6 +107,7 @@ function showPasswordPrompt($fileId, $error = null) {
         <div class="password-form">
             ' . ($error ? '<div class="error">' . $error . '</div>' : '') . '
             <form method="post">
+                <input type="hidden" name="passwordpro">
                 <label for="file_password">Enter Password:</label>
                 <input type="password" name="file_password" required>
                 <button type="submit" name="password_submit" value="Access File">
